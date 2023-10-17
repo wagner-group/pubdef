@@ -47,7 +47,7 @@ A full usage example is provided in `scripts/example_full.sh`. This script has f
 bash scripts/example_full.sh
 ```
 
-A following script is also provided to run the full training process but rather than having to locally train source models (this script directly loads two which can be configured to load more public models as a proxy)
+The following script is found in `scripts/training-with-public-models.sh`; it also runs the full training defense process but rather than having to locally train source models (this script directly loads two which can be configured to load more public models as a proxy for step 2 in the `scripts/example_full.sh` script)
 
 ```bash
 bash scripts/training-with-public-models.sh
