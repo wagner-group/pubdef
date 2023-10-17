@@ -50,7 +50,7 @@ bash scripts/example_full.sh
 A following script is also provided to run the full training process but rather than having to locally train source models (this script directly loads two which can be configured to load more public models as a proxy)
 
 ```bash
-bash scripts/training_with_public_models.sh
+bash scripts/training-with-public-models.sh
 ```
 
 ## List of Public Models Used in the Experiments
