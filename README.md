@@ -56,6 +56,8 @@ We have prepared pre-trained PubDef models for CIFAR-10, CIFAR-100, and ImageNet
 The compressed file size is about 2GB.
 
 ```bash
+# Install kaggle CLI
+pip install kaggle
 # Get a Kaggle API token. Place it at .kaggle/kaggle.json
 ...
 # Download the pre-trained models and transfer attacks
