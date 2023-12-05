@@ -37,6 +37,8 @@ pip install 'git+https://github.com/RobustBench/robustbench.git'
 pip install -U black pydocstyle pycodestyle
 ```
 
+NOTE: Installing `robustbench` after `timm` will downgrade it to a compatible version (`0.6.13`). This should not be a problem.
+
 ## File Organization
 
 ## Public Models
@@ -48,16 +50,58 @@ Only a few models have to be downloaded manually where we provide a script at `s
 
 ## Example Scripts
 
+### Evaluation Script
+
+We have prepared pre-trained PubDef models for CIFAR-10, CIFAR-100, and ImageNet as well as some transfer attacks we generated for download from Kaggle ([link](https://www.kaggle.com/datasets/csitawarin/pubdef-defending-against-transfer-attacks/)).
+The compressed file size is about 2GB.
+
+```bash
+# Get a Kaggle API token. Place it at .kaggle/kaggle.json
+...
+# Download the pre-trained models and transfer attacks
+kaggle datasets download csitawarin/pubdef-defending-against-transfer-attacks
+# Unzip and move results dir to the root directory of this repository
+# (e.g., ...pubdef/results/cifar10_wideresnet34-10_pubdef/...)
+unzip pubdef-defending-against-transfer-attacks.zip && mv results/results .
+# Run the evaluation script
+bash scripts/example_test.sh
+```
+
+The script above should produce the following results:
+
+CIFAR-10 (attack: `mpgd`, source model: `cifar10_huggingface-vit-base`)
+
+| Models                           | Clean Accuracy | M-PGD Accuracy |
+| -------------------------------- | -------------: | -------------: |
+| `cifar10_wideresnet34-10_pubdef` |          96.10 |          95.46 |
+| `cifar10_huggingface-convnext`   |          97.35 |          55.03 |
+
+CIFAR-100 (attack: `mpgd`, source model: `cifar100_huggingface-swin-tiny`)
+
+| Models                              | Clean Accuracy | M-PGD Accuracy |
+| ----------------------------------- | -------------: | -------------: |
+| `cifar100_wideresnet34-10_pubdef`   |          76.53 |          65.09 |
+| `cifar100_robustbench-rade21-rn-18` |          61.50 |          59.81 |
+
+ImageNet (attack: `mpgd`, source model: `imagenet_huggingface-swin-t`)
+
+| Models                         | Clean Accuracy | M-PGD Accuracy |
+| ------------------------------ | -------------: | -------------: |
+| `imagenet_resnet50_pubdef`     |          78.65 |          71.94 |
+| `imagenet_timm-mobilenet-v3-l` |          74.35 |          61.55 |
+
+### Full Script
+
 A full usage example is provided in `scripts/example_full.sh`. This script has five steps, training base model, training source model, generating transfer adversarial examples, re-training base model with the defense, and evaluating it against other transfer attacks. To run it, simply execute the following command (some parameters may need to be modified):
 
 ```bash
 bash scripts/example_full.sh
 ```
 
-The following script is found in `scripts/training-with-public-models.sh`; it also runs the full training defense process but rather than having to locally train source models (this script directly loads two which can be configured to load more public models as a proxy for step 2 in the `scripts/example_full.sh` script)
+The following script is found in `scripts/example_train_with_public_models.sh`; it also runs the full training defense process but rather than having to locally train source models (this script directly loads two which can be configured to load more public models as a proxy for step 2 in the `scripts/example_full.sh` script)
 
 ```bash
-bash scripts/training-with-public-models.sh
+bash scripts/example_train_with_public_models.sh
 ```
 
 ## Experiment Setup

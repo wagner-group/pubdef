@@ -166,6 +166,7 @@ CUDA_VISIBLE_DEVICES=$GPU python -u transfer_exp_main.py --no-distributed \
     --seed $SEED --full-precision --data-dir "$DATAPATH" \
     --dataset $DATASET --workers $NUM_WORKERS --print-freq 50 \
     --batch-size $BS --epsilon $EPS --atk-norm "Linf" --experiment "none" \
+    --data-load-mode "load" \
     --tgt-models $TGT_MODEL \
     --transfer-attacks pgd \
     --src-models $SRC_NAME

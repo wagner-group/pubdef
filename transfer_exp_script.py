@@ -9,7 +9,7 @@ from src.utils.argparser import get_args_parser
 from transfer_exp_main import run_exp
 
 
-def main() -> None:
+def main(config) -> None:
     """Run transfer experiments for multiple sources, targets, and attacks.
 
     WARNING: metrics["idx_correct"] returned from train_test_main() should have
@@ -71,5 +71,5 @@ if __name__ == "__main__":
         parents=[get_args_parser()],
     )
     args = main_parser.parse_args()
-    config: dict[str, Any] = vars(args)
-    main()
+    _config: dict[str, Any] = vars(args)
+    main(_config)
